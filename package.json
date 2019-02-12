@@ -1,0 +1,34 @@
+{
+  "name": "graphql-kungfu",
+  "version": "0.1.0",
+  "description": "Easy setup powerful GraphQL Server on AWS Lambda",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BranLiang/graphql-kungfu.git"
+  },
+  "keywords": [
+    "graphql",
+    "lambda",
+    "server",
+    "api",
+    "apollo",
+    "apollo-server"
+  ],
+  "author": "Branliang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BranLiang/graphql-kungfu/issues"
+  },
+  "homepage": "https://github.com/BranLiang/graphql-kungfu",
+  "devDependencies": {
+    "typescript": "^3.3.3"
+  }
+}
