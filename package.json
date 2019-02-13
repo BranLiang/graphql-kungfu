@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "description": "Easy setup powerful GraphQL Server on AWS Lambda",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "8.10"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,14 @@
   },
   "homepage": "https://github.com/BranLiang/graphql-kungfu",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.19",
+    "@types/node": "^11.9.3",
     "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "graphql": "^14.1.1",
+    "graphql-import": "^0.7.1",
+    "graphql-tools": "^4.0.4",
+    "graphql-upload": "^8.0.4"
   }
 }
