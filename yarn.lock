@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.19.tgz#913a8016a4599d262960d97cb11faf7e963ec0e1"
   integrity sha512-dEhQow/1awGGIf/unEpb97vsTtnQ3qRPAhSmZZcXKzs4nOVbIuWo5LCCzOYdSIkGkkoFXVvc8pBaSVKRYIFUBA==
 
+"@types/graphql@^14.0.7":
+  version "14.0.7"
+  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.7.tgz#daa09397220a68ce1cbb3f76a315ff3cd92312f6"
+  integrity sha512-BoLDjdvLQsXPZLJux3lEZANwGr3Xag56Ngy0U3y8uoRSDdeLcn43H3oBcgZlnd++iOQElBpaRVDHPzEDekyvXQ==
+
 "@types/node@^11.9.3":
   version "11.9.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.3.tgz#14adbb5ab8cd563f549fbae8dbe92e0b7d6e76cc"

@@ -1,4 +1,4 @@
-import { GraphQLServerLambda } from '../../src';
+import { GraphQLServerLambda } from 'graphql-kungfu';
 import typeDefs from './types';
 import resolvers from './resolvers';
 

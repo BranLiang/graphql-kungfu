@@ -5,8 +5,7 @@ import { IncomingMessage } from 'http';
 import * as stream from 'stream';
 import {
   Context as LambdaContext,
-  APIGatewayProxyEvent,
-  APIGatewayProxyCallback
+  APIGatewayProxyEvent
 } from 'aws-lambda';
 
 type Context = { [key: string]: any }
@@ -67,23 +66,13 @@ export class GraphQLServerLambda {
 
   graphqlHandler = async (
     event: APIGatewayProxyEvent,
-    context: LambdaContext,
-    callback: APIGatewayProxyCallback
+    context: LambdaContext
   ): Promise<void> => {
     const contentType = event.headers['content-type'] || event.headers['Content-Type']
-    if (contentType === 'multipart/form-data') {
-      const request = new stream.Readable() as any
-      request.push(
-        Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'ascii')
-      )
-      request.push(null)
-      request.headers = event.headers
-      request.headers['content-type'] = contentType
-      await processRequest(request, this.options.uploads)
-    }
+
     let query = event.body
-    if (event.body && contentType === 'application/json') {
-      query = JSON.parse(event.body)
+    if (query && contentType.startsWith('application/json')) {
+      query = JSON.parse(query)
     }
   }
 }

@@ -13,7 +13,7 @@ provider:
 
 functions:
   graphql:
-    handler: dist/example/src/handler.server
+    handler: dist/handler.server
     name: graphql-kungfu-api
     events:
       - http:

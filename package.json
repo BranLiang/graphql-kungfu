@@ -32,6 +32,7 @@
   "homepage": "https://github.com/BranLiang/graphql-kungfu",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.19",
+    "@types/graphql": "^14.0.7",
     "@types/node": "^11.9.3",
     "typescript": "^3.3.3"
   },
