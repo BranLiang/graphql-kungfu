@@ -1,0 +1,25 @@
+service: graphql-kungfu-example
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  memorySize: 256
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "lambda:InvokeFunction"
+      Resource: "*"
+
+functions:
+  graphql:
+    handler: dist/example/src/handler.server
+    name: graphql-kungfu-api
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline

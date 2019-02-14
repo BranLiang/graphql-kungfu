@@ -1,0 +1,22 @@
+{
+  "name": "graphql-kunfu-example",
+  "version": "1.0.0",
+  "description": "Example project for graphql-kunfu",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn compile && sls offline start --port 8080",
+    "watch": "tsc --watch",
+    "deploy": "yarn compile && sls deploy",
+    "compile": "rm -rf dist && tsc && yarn copy:gql",
+    "copy:gql": "cp src/types/*.gql dist/example/src/types"
+  },
+  "dependencies": {
+    "merge-graphql-schemas": "^1.5.8",
+    "nanoid": "^2.0.1"
+  },
+  "devDependencies": {
+    "serverless": "^1.37.1",
+    "serverless-offline": "^4.4.2",
+    "typescript": "^3.3.3"
+  }
+}

@@ -1,0 +1,20 @@
+scalar Upload
+
+type User {
+  id: ID!
+  name: String
+  avatar: String
+}
+
+input CreateUserInput {
+  name: String!
+  avatarFile: Upload!
+}
+
+type Query {
+  dummyUser: User
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+}
