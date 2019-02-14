@@ -37,6 +37,8 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
+    "apollo-server-core": "^2.4.0",
+    "apollo-server-env": "^2.2.0",
     "graphql": "^14.1.1",
     "graphql-import": "^0.7.1",
     "graphql-tools": "^4.0.4",

@@ -4,6 +4,11 @@ import { processRequest } from 'graphql-upload';
 import { IncomingMessage } from 'http';
 import * as stream from 'stream';
 import {
+  GraphQLOptions,
+  HttpQueryError,
+  runHttpQuery,
+} from 'apollo-server-core';
+import {
   Context as LambdaContext,
   APIGatewayProxyEvent
 } from 'aws-lambda';
@@ -67,12 +72,15 @@ export class GraphQLServerLambda {
   graphqlHandler = async (
     event: APIGatewayProxyEvent,
     context: LambdaContext
-  ): Promise<void> => {
+  ) => {
+    console.log(event)
     const contentType = event.headers['content-type'] || event.headers['Content-Type']
 
     let query = event.body
     if (query && contentType.startsWith('application/json')) {
       query = JSON.parse(query)
     }
+
+    return {}
   }
 }
