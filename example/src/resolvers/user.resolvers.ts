@@ -24,7 +24,6 @@ export default {
   },
   Mutation: {
     createUser: (_, { input }: CreateUserInput, __) => {
-      console.log(input)
       return dummy
     }
   }

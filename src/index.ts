@@ -3,11 +3,8 @@ import { IResolvers, makeExecutableSchema } from 'graphql-tools';
 import { processRequest } from 'graphql-upload';
 import { IncomingMessage } from 'http';
 import * as stream from 'stream';
-import {
-  GraphQLOptions,
-  HttpQueryError,
-  runHttpQuery,
-} from 'apollo-server-core';
+import { runHttpQuery } from 'apollo-server-core';
+import { Headers } from 'apollo-server-env';
 import {
   Context as LambdaContext,
   APIGatewayProxyEvent
@@ -73,14 +70,48 @@ export class GraphQLServerLambda {
     event: APIGatewayProxyEvent,
     context: LambdaContext
   ) => {
-    console.log(event)
     const contentType = event.headers['content-type'] || event.headers['Content-Type']
 
-    let query = event.body
-    if (query && contentType.startsWith('application/json')) {
-      query = JSON.parse(query)
+    let query;
+    if (event.body && contentType.startsWith('application/json')) {
+      query = JSON.parse(event.body)
+    } else {
+      query = event.queryStringParameters
     }
 
-    return {}
+    try {
+      const { graphqlResponse, responseInit } = await runHttpQuery(
+        [event, context],
+        {
+          method: event.httpMethod,
+          options: {
+            schema: this.executableSchema,
+            context: this.context
+          },
+          query: query,
+          request: {
+            url: event.path,
+            method: event.httpMethod,
+            headers: new Headers(event.headers)
+          }
+        }
+      )
+      return {
+        body: graphqlResponse,
+        statusCode: 200,
+        headers: responseInit.headers
+      }
+    } catch (error) {
+      if ('HttpQueryError' !== error.name) {
+        return error
+      }
+      return {
+        body: error.message,
+        statusCode: error.statusCode,
+        headers: error.headers
+      }
+    }
+
+
   }
 }
