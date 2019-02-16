@@ -75,6 +75,14 @@ export class GraphQLServerLambda {
     let query;
     if (event.body && contentType.startsWith('application/json')) {
       query = JSON.parse(event.body)
+    } else if (event.body && contentType.startsWith('multipart/form-data')) {
+      const request = new stream.Readable() as any;
+      const response = new stream.Writable() as any;
+      request.push(Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'ascii'),);
+      request.push(null);
+      request.headers = event.headers;
+      request.headers['content-type'] = contentType;
+      query = await processRequest(request, response, this.options.uploads)
     } else {
       query = event.queryStringParameters
     }
@@ -111,7 +119,6 @@ export class GraphQLServerLambda {
         headers: error.headers
       }
     }
-
 
   }
 }
