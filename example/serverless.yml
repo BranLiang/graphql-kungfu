@@ -20,6 +20,13 @@ functions:
           path: graphql
           method: post
           cors: true
+  playground:
+    handler: dist/handler.playground
+    name: graphql-kungfu-playground
+    events:
+      - http:
+          path: playground
+          method: get
 
 plugins:
   - serverless-offline

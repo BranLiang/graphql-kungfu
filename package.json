@@ -41,6 +41,7 @@
     "apollo-server-env": "^2.2.0",
     "graphql": "^14.1.1",
     "graphql-import": "^0.7.1",
+    "graphql-playground-middleware-lambda": "^1.7.12",
     "graphql-tools": "^4.0.4",
     "graphql-upload": "^8.0.4"
   }

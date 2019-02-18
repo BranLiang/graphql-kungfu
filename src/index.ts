@@ -10,9 +10,11 @@ import { processRequest } from 'graphql-upload';
 import * as stream from 'stream';
 import { runHttpQuery } from 'apollo-server-core';
 import { Headers } from 'apollo-server-env';
+import lambdaPlayground from 'graphql-playground-middleware-lambda'
 import {
   Context as LambdaContext,
-  APIGatewayProxyEvent
+  APIGatewayProxyEvent,
+  APIGatewayProxyHandler
 } from 'aws-lambda';
 
 type Context = { [key: string]: any }
@@ -27,7 +29,9 @@ type LambdaContextCallback = (params: LambdaContextParameters) => Context
 interface LambdaOptions {
   formatError?: Function,
   formatResponse?: Function,
-  uploads?: UploadOptions
+  uploads?: UploadOptions,
+  playgroundEndpoint?: string,
+  endpoint?: string
 }
 
 interface LambdaProps {
@@ -50,7 +54,8 @@ interface UploadOptions {
 }
 
 const defaultOptions: LambdaOptions = {
-  uploads: {}
+  uploads: {},
+  endpoint: '/graphql'
 }
 
 export class GraphQLServerLambda {
@@ -138,6 +143,11 @@ export class GraphQLServerLambda {
         headers: error.headers
       }
     }
+  }
 
+  playgroundHandler: APIGatewayProxyHandler = (event, lambdaContext, callback) => {
+    lambdaPlayground({
+      endpoint: this.options.endpoint
+    })(event, lambdaContext, callback)
   }
 }

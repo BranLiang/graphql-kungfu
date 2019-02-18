@@ -4,7 +4,11 @@ import resolvers from './resolvers';
 
 const lambda = new GraphQLServerLambda({
   typeDefs,
-  resolvers
+  resolvers,
+  options: {
+    endpoint: '/graphql'
+  }
 });
 
-export const server = lambda.graphqlHandler
+export const server = lambda.graphqlHandler;
+export const playground = lambda.playgroundHandler;
