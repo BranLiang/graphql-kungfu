@@ -1,7 +1,12 @@
 import { GraphQLSchema } from 'graphql';
-import { IResolvers, makeExecutableSchema } from 'graphql-tools';
+import {
+  IResolvers,
+  makeExecutableSchema,
+  SchemaDirectiveVisitor,
+  IDirectiveResolvers,
+  IResolverValidationOptions
+} from 'graphql-tools';
 import { processRequest } from 'graphql-upload';
-import { IncomingMessage } from 'http';
 import * as stream from 'stream';
 import { runHttpQuery } from 'apollo-server-core';
 import { Headers } from 'apollo-server-env';
@@ -30,7 +35,12 @@ interface LambdaProps {
   resolvers?: IResolvers,
   context?: Context | LambdaContextCallback,
   options?: LambdaOptions,
-  schema?: GraphQLSchema
+  schema?: GraphQLSchema,
+  schemaDirectives?: {
+    [name: string]: typeof SchemaDirectiveVisitor
+  },
+  directiveResolvers?: IDirectiveResolvers<any, any>,
+  resolverValidationOptions?: IResolverValidationOptions
 }
 
 interface UploadOptions {
