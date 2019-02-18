@@ -40,6 +40,7 @@
     "apollo-server-core": "^2.4.0",
     "apollo-server-env": "^2.2.0",
     "graphql": "^14.1.1",
+    "graphql-deduplicator": "^2.0.2",
     "graphql-import": "^0.7.1",
     "graphql-playground-middleware-lambda": "^1.7.12",
     "graphql-tools": "^4.0.4",

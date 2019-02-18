@@ -1,16 +1,14 @@
 import { GraphQLSchema } from 'graphql';
 import {
   IResolvers,
-  makeExecutableSchema,
-  SchemaDirectiveVisitor,
-  IDirectiveResolvers,
-  IResolverValidationOptions
+  makeExecutableSchema
 } from 'graphql-tools';
 import { processRequest } from 'graphql-upload';
 import * as stream from 'stream';
 import { runHttpQuery } from 'apollo-server-core';
 import { Headers } from 'apollo-server-env';
-import lambdaPlayground from 'graphql-playground-middleware-lambda'
+import lambdaPlayground from 'graphql-playground-middleware-lambda';
+import { deflate } from 'graphql-deduplicator';
 import {
   Context as LambdaContext,
   APIGatewayProxyEvent,
@@ -20,31 +18,27 @@ import {
 type Context = { [key: string]: any }
 
 interface LambdaContextParameters {
-  event: APIGatewayProxyEvent,
+  event: APIGatewayProxyEvent
   context: LambdaContext
 }
 
 type LambdaContextCallback = (params: LambdaContextParameters) => Context
 
 interface LambdaOptions {
-  formatError?: Function,
-  formatResponse?: Function,
-  uploads?: UploadOptions,
-  playgroundEndpoint?: string,
+  uploads?: UploadOptions
+  playgroundEndpoint?: string
   endpoint?: string
+  deduplicator?: boolean
+  formatError?: Function
+  formatResponse?: Function
 }
 
 interface LambdaProps {
-  typeDefs?: string,
-  resolvers?: IResolvers,
-  context?: Context | LambdaContextCallback,
-  options?: LambdaOptions,
-  schema?: GraphQLSchema,
-  schemaDirectives?: {
-    [name: string]: typeof SchemaDirectiveVisitor
-  },
-  directiveResolvers?: IDirectiveResolvers<any, any>,
-  resolverValidationOptions?: IResolverValidationOptions
+  typeDefs?: string
+  resolvers?: IResolvers
+  context?: Context | LambdaContextCallback
+  options?: LambdaOptions
+  schema?: GraphQLSchema
 }
 
 interface UploadOptions {
@@ -54,8 +48,13 @@ interface UploadOptions {
 }
 
 const defaultOptions: LambdaOptions = {
-  uploads: {},
-  endpoint: '/graphql'
+  uploads: {
+    maxFieldSize: 1000000, // 1MB
+    maxFileSize: 2000000, // 2MB
+    maxFiles: 4
+  },
+  endpoint: '/graphql',
+  deduplicator: true
 }
 
 export class GraphQLServerLambda {
@@ -73,17 +72,8 @@ export class GraphQLServerLambda {
     if (props.schema) {
       this.executableSchema = props.schema
     } else if (props.typeDefs && props.resolvers) {
-      let {
-        directiveResolvers,
-        schemaDirectives,
-        resolverValidationOptions,
-        typeDefs,
-        resolvers
-      } = props
+      let { typeDefs, resolvers } = props
       this.executableSchema = makeExecutableSchema({
-        directiveResolvers,
-        schemaDirectives,
-        resolverValidationOptions,
         typeDefs,
         resolvers
       })
@@ -94,6 +84,23 @@ export class GraphQLServerLambda {
     event: APIGatewayProxyEvent,
     context: LambdaContext
   ) => {
+    const formatResponse = (event: APIGatewayProxyEvent) => {
+      return (response, ...args) => {
+        if (
+          this.options.deduplicator &&
+          event.headers &&
+          event.headers['X-GraphQL-Deduplicate'] &&
+          response.data &&
+          !response.data.__schema
+        ) {
+          response.data = deflate(response.data)
+        }
+        return this.options.formatResponse
+          ? this.options.formatResponse(response, ...args)
+          : response
+      }
+    }
+
     const contentType = event.headers['content-type'] || event.headers['Content-Type']
 
     let query;
@@ -118,7 +125,9 @@ export class GraphQLServerLambda {
           method: event.httpMethod,
           options: {
             schema: this.executableSchema,
-            context: this.context
+            context: this.context,
+            formatError: this.options.formatError,
+            formatResponse: formatResponse(event)
           },
           query: query,
           request: {

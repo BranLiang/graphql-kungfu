@@ -323,6 +323,11 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
+graphql-deduplicator@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/graphql-deduplicator/-/graphql-deduplicator-2.0.2.tgz#d8608161cf6be97725e178df0c41f6a1f9f778f3"
+  integrity sha512-0CGmTmQh4UvJfsaTPppJAcHwHln8Ayat7yXXxdnuWT+Mb1dBzkbErabCWzjXyKh/RefqlGTTA7EQOZHofMaKJA==
+
 graphql-extensions@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.5.0.tgz#117b9872e5cafbebef5254ad795b41fa97037c14"
