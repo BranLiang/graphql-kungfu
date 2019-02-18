@@ -9,9 +9,6 @@
   "scripts": {
     "example": "tsc && cd ./example && yarn refresh"
   },
-  "engines": {
-    "node": "8.10"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BranLiang/graphql-kungfu.git"
