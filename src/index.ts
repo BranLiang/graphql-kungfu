@@ -68,8 +68,17 @@ export class GraphQLServerLambda {
     if (props.schema) {
       this.executableSchema = props.schema
     } else if (props.typeDefs && props.resolvers) {
-      let { typeDefs, resolvers } = props
+      let {
+        directiveResolvers,
+        schemaDirectives,
+        resolverValidationOptions,
+        typeDefs,
+        resolvers
+      } = props
       this.executableSchema = makeExecutableSchema({
+        directiveResolvers,
+        schemaDirectives,
+        resolverValidationOptions,
         typeDefs,
         resolvers
       })
