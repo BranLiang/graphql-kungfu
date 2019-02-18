@@ -1367,9 +1367,17 @@ graphql-import@^0.7.1:
     graphql "^14.1.1"
     graphql-deduplicator "^2.0.2"
     graphql-import "^0.7.1"
+    graphql-middleware "^3.0.2"
     graphql-playground-middleware-lambda "^1.7.12"
     graphql-tools "^4.0.4"
     graphql-upload "^8.0.4"
+
+graphql-middleware@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/graphql-middleware/-/graphql-middleware-3.0.2.tgz#c8cdb67615eec02aec237b455e679f5fc973ddc4"
+  integrity sha512-sRqu1sF+77z42z1OVM1QDHKQWnWY5K3nAgqWiZwx3U4tqNZprrDuXxSChPMliV343IrVkpYdejUYq9w24Ot3FA==
+  dependencies:
+    graphql-tools "^4.0.4"
 
 graphql-playground-html@1.6.12:
   version "1.6.12"

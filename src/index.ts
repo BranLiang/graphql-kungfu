@@ -14,6 +14,10 @@ import {
   APIGatewayProxyEvent,
   APIGatewayProxyHandler
 } from 'aws-lambda';
+import {
+  IMiddleware,
+  applyMiddleware
+} from 'graphql-middleware'
 
 type Context = { [key: string]: any }
 
@@ -39,6 +43,7 @@ interface LambdaProps {
   context?: Context | LambdaContextCallback
   options?: LambdaOptions
   schema?: GraphQLSchema
+  middlewares?: IMiddleware[]
 }
 
 interface UploadOptions {
@@ -77,6 +82,13 @@ export class GraphQLServerLambda {
         typeDefs,
         resolvers
       })
+    }
+    if (props.middlewares) {
+      const { schema } = applyMiddleware(
+        this.executableSchema,
+        ...props.middlewares,
+      )
+      this.executableSchema = schema
     }
   }
 

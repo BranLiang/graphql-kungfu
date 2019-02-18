@@ -42,6 +42,7 @@
     "graphql": "^14.1.1",
     "graphql-deduplicator": "^2.0.2",
     "graphql-import": "^0.7.1",
+    "graphql-middleware": "^3.0.2",
     "graphql-playground-middleware-lambda": "^1.7.12",
     "graphql-tools": "^4.0.4",
     "graphql-upload": "^8.0.4"
