@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/BranLiang/graphql-kungfu/master/cover.jpg" width="100" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/BranLiang/graphql-kungfu/master/cover.jpg" width="600" /></p>
 
 # graphql-kungfu
 
@@ -8,14 +8,13 @@ Easy setup powerful GraphQL Server on AWS Lambda.
 
 ## Overview
 
-* **Serverless GraphQL server on AWS Lambda:** Focus on aws lambda only.
-* **First package which support file upload:** Only solution officially available.
+* **Serverless GraphQL server on AWS Lambda**
+* **First package which support file upload**
 
 ## Features
 
 * GraphQL spec-compliant
 * File upload
-* GraphQL Subscriptions(not supported yet)
 * TypeScript typings
 * GraphQL Playground
 * Schema directives
@@ -51,6 +50,6 @@ export const playground = lambda.playgroundHandler;
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License.
 
 
