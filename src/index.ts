@@ -96,6 +96,17 @@ export class GraphQLServerLambda {
     event: APIGatewayProxyEvent,
     context: LambdaContext
   ) => {
+    let apolloContext
+    try {
+      apolloContext =
+        typeof this.context === 'function'
+          ? await this.context({ event, context })
+          : this.context
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
+
     const formatResponse = (event: APIGatewayProxyEvent) => {
       return (response, ...args) => {
         if (
@@ -137,7 +148,7 @@ export class GraphQLServerLambda {
           method: event.httpMethod,
           options: {
             schema: this.executableSchema,
-            context: this.context,
+            context: apolloContext,
             formatError: this.options.formatError,
             formatResponse: formatResponse(event)
           },
