@@ -35,6 +35,7 @@ interface LambdaOptions {
   deduplicator?: boolean
   formatError?: Function
   formatResponse?: Function
+  debug?: boolean
 }
 
 interface LambdaProps {
@@ -150,7 +151,8 @@ export class GraphQLServerLambda {
             schema: this.executableSchema,
             context: apolloContext,
             formatError: this.options.formatError,
-            formatResponse: formatResponse(event)
+            formatResponse: formatResponse(event),
+            debug: this.options.debug
           },
           query: query,
           request: {
