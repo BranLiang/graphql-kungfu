@@ -1,6 +1,6 @@
 {
   "name": "graphql-kungfu",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easy setup powerful GraphQL Server on AWS Lambda",
   "main": "dist/index.js",
   "files": [
